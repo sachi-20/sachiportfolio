@@ -1,0 +1,28 @@
+.splash-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.splash-animation-container {
+  height: 50vh;
+}
+
+.splash-title-container {
+  font-size: 2.5rem;
+  text-decoration: none;
+}
+
+.splash-title {
+  font-family: "Urbanist", "Poppins", sans-serif; /* modern + readable */
+  font-weight: 500; /* bold for visibility */
+  letter-spacing: 0.5px;
+  color: #f8fafc; /* warm off-white */
+  padding: 0 10px;
+  transition: all 0.3s ease;
+
+  /* optional subtle ember glow */
+  text-shadow: 0 0 8px rgba(234, 88, 12, 0.4);
+}

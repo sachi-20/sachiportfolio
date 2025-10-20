@@ -1,0 +1,92 @@
+/* Change colors in this file to style to your needs on a global level. 
+Certain colors are used for different and multiply types of elements. 
+For greater control over colors visit each components .scss file. */
+
+// button colors
+$buttonColor: #ea580c; // ember orange primary
+$buttonHover: #fb923c; // lighter orange hover
+$topButtonHover: #fcd34d; // soft golden hover
+
+// text colors light theme
+$titleColor: #181818;
+$textColor: #1e1e1e;
+$subTitle: #6b7280;
+$cardSubtitle: #737373;
+$talkCardSubTitle: #7f8287;
+$blogCardTitleColor: #2a2a2a;
+
+// text color dark theme
+$textColorDark: #f8fafc; // warm off-white
+
+// toggle switch colors
+$toggleCheck: #ea580c; // ember toggle
+$toggleSwitchSliderBG: #555; // slightly lighter gray background
+
+// githubRepo specific colors
+$githubRepoCardLanguageColorBG: #fb923c;
+$githubRepoCardColor: #f8fafc;
+$githubRepoCardRepoCardStatsColor: #e5e7eb;
+$githubRepoCardRepoNameColor: #fcd34d;
+$githubProfileCardLocationTS: #fb923c;
+$githubProfileCardBorder: #ea580c;
+
+// light background colors
+$lightBackground1: #fff8f2;
+$lightBackground2: #fff4eb;
+$lightBackground3: #fde68a;
+$blogCardContainerColor: #fb923c;
+
+// dark background colors
+$darkBackground: #292929; // richer charcoal
+$darkBackground2: #2e2e2e;
+
+// light theme box shadows
+$lightBoxShadowDark: rgba(0, 0, 0, 0.25);
+$lightBoxShadow: rgba(0, 0, 0, 0.15);
+$lightBoxShadowDarker: rgba(0, 0, 0, 0.35);
+
+// dark theme box shadows
+$darkBoxShadow: rgba(234, 88, 12, 0.3); // soft ember glow
+$darkBoxShadow2: rgba(255, 255, 255, 0.1);
+
+// linear gradients
+$experienceCardBlurredDivLG: linear-gradient(
+  rgba(24, 24, 24, 0.8),
+  rgba(234, 88, 12, 0.25)
+);
+$experienceCardBannerLG: linear-gradient(
+  rgba(234, 88, 12, 0.85),
+  rgba(24, 24, 24, 0.85)
+);
+
+// borders
+$progressBarBackground: #2e2e2e;
+$lightBorder1: rgba(255, 255, 255, 0.1);
+$educationCardBorder: #fb923c;
+
+// hovers
+$achievementCertificateCardHoverDark: rgba(234, 88, 12, 0.2);
+$blogCardHoverSmallColor: rgba(251, 146, 60, 0.85);
+$headerHoverBG: #232323;
+$contactDetailHoverTS: #ea580c;
+
+// misc backgrounds
+$progressBarSpanBG: #ea580c;
+$iconBackground: #1f1f1f;
+$appHeaderBG: #181818;
+
+// misc colors
+$skillsColor: #fb923c;
+$appLink: #fcd34d;
+
+// social media icons
+$faceBook: #3b5998;
+$linkedin: #0e76a8;
+$github: #000000;
+$gitlab: #fca326;
+$google: #ea4335;
+$twitter: #1da1f2;
+$medium: #000;
+$stackoverflow: #f48024;
+$instagram: #c13584;
+$kaggle: #20beff;

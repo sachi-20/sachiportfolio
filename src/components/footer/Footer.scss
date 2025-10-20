@@ -1,0 +1,21 @@
+@import "../../_globalColor";
+
+.footer-text {
+  text-align: center;
+  color: $subTitle !important;
+}
+
+.dark-mode {
+  color: $textColorDark !important;
+}
+
+.footer-div {
+  margin-top: 2rem;
+  padding-bottom: 1rem;
+}
+
+/* Hide footer text visually but keep elements in the DOM.
+   This allows quick toggling back by removing/commenting this rule. */
+.footer-div .footer-text {
+  display: none;
+}
