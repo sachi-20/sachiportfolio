@@ -4,15 +4,15 @@
 
 ## About This Repository
 
-This repository is the central showcase for my professional work and personal projects as a **[Your Primary Job Title, e.g., Software Developer, UX Designer]**.
+This repository is the central showcase for my professional work and personal projects.
 
 ---
 
 ## Key Skills
 
-* **[Skill 1, e.g., JavaScript]**
-* **[Skill 2, e.g., Python]**
-* **[Skill 3, e.g., AWS]**
+* **Python**
+* **AWS**
+* **JavaScript**
 
 ---
 
@@ -20,5 +20,5 @@ This repository is the central showcase for my professional work and personal pr
 
 Feel free to connect or reach out regarding collaborations or opportunities.
 
-* **LinkedIn:** [Link to your LinkedIn Profile]
-* **Email:** [Your Professional Email]
+* **LinkedIn:** https://www.linkedin.com/in/sachi-kaushik30/
+* **Email:** sk5476@columbia.edu
