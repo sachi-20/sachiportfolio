@@ -152,7 +152,7 @@ const workExperiences = {
     {
       role: "Machine Learning Engineer Intern",
       company: "adMarketplace",
-      companylogo: require("./assets/images/ampLogo.avif"),
+      companylogo: require("./assets/images/ampLogo.jpeg"),
       date: "June 2025 – Present",
       desc: "",
       descBullets: [
