@@ -1,0 +1,33 @@
+name: Auto-update profile.json
+
+on:
+  schedule:
+    # Runs every 6 hours
+    - cron: '0 */24 * * *'
+  workflow_dispatch: # Manual trigger if needed
+
+jobs:
+  update-profile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Fetch GitHub profile
+        env:
+          GH_USERNAME: sachi-20
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          echo "Fetching GitHub profile..."
+          curl -H "Authorization: token $GH_TOKEN" \
+               https://api.github.com/users/$GH_USERNAME \
+               -o profile.json
+          echo "Profile.json updated"
+
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add profile.json
+          git commit -m "Auto-update profile.json via GitHub Actions" || echo "No changes"
+          git push
