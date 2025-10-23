@@ -2,9 +2,11 @@ name: Auto-update profile.json
 
 on:
   schedule:
-    # Runs every 6 hours
     - cron: '0 */24 * * *'
-  workflow_dispatch: # Manual trigger if needed
+  workflow_dispatch:
+
+permissions:
+  contents: write   # <-- allows pushing changes
 
 jobs:
   update-profile:
@@ -19,15 +21,17 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           echo "Fetching GitHub profile..."
+          mkdir -p public
           curl -H "Authorization: token $GH_TOKEN" \
                https://api.github.com/users/$GH_USERNAME \
-               -o profile.json
-          echo "Profile.json updated"
+               -o public/profile.json
+          echo "Profile.json saved to public/"
 
       - name: Commit and push changes
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add profile.json
+          git add public/profile.json
           git commit -m "Auto-update profile.json via GitHub Actions" || echo "No changes"
           git push
+
