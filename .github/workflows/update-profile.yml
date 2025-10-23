@@ -24,31 +24,49 @@ jobs:
           GH_USERNAME: sachi-20
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
-          set -e
-          # Build GraphQL payload that returns the same structure your app expects
-          read -r -d '' PAYLOAD <<'GRAPHQL'
-          {
-            "query": "query($login: String!) { user(login: $login) { name bio avatarUrl location pinnedItems(first: 6) { totalCount edges { node { name description forkCount stargazers { totalCount } url id diskUsage primaryLanguage { name color } } } } } }",
-            "variables": { "login": "sachi-20" }
-          }
-          GRAPHQL
+          mkdir -p public
 
-          # Call GitHub GraphQL API and save raw output
-          curl -s -H "Authorization: bearer $GH_TOKEN" \
-               -H "Content-Type: application/json" \
-               -X POST \
-               -d "$PAYLOAD" \
-               https://api.github.com/graphql \
-               -o public/profile.json
+          QUERY='query($login: String!) {
+            user(login: $login) {
+              name
+              bio
+              avatarUrl
+              location
+              pinnedItems(first: 6) {
+                totalCount
+                edges {
+                  node {
+                    name
+                    description
+                    forkCount
+                    stargazers { totalCount }
+                    url
+                    id
+                    diskUsage
+                    primaryLanguage { name color }
+                  }
+                }
+              }
+            }
+          }'
 
-          # quick validation: ensure we have non-empty output and it contains "data"
-          if ! jq -e '.data' public/profile.json > /dev/null 2>&1; then
-            echo "ERROR: GraphQL response invalid or missing 'data' field"
-            echo "--- BEGIN response ---"
-            cat public/profile.json || true
-            echo "---- END response ----"
+          echo "Fetching GraphQL data for $GH_USERNAME"
+          curl -s -X POST https://api.github.com/graphql \
+            -H "Authorization: bearer $GH_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d "{\"query\": \"$QUERY\", \"variables\": {\"login\": \"$GH_USERNAME\"}}" \
+            -o public/profile.json
+
+          echo "GraphQL response (first 20 lines):"
+          head -n 20 public/profile.json
+
+          # Validate output
+          if ! grep -q '"data"' public/profile.json; then
+            echo "❌ ERROR: Invalid GraphQL response (no 'data' field)"
+            cat public/profile.json
             exit 1
           fi
+
 
       - name: Show small preview (for logs)
         run: |
