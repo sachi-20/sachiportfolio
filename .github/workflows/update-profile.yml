@@ -81,11 +81,18 @@ jobs:
           echo "Top of public/profile.json:"
           head -n 30 public/profile.json || true
 
+      - name: Write profile.json
+        run: |
+          mkdir -p public
+          echo '${{ steps.fetch.outputs.result }}' > public/profile.json
+          cat public/profile.json
+      
       - name: Commit and push changes
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # optional if you use default token; not required if using GH_TOKEN for GraphQL
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git commit -m "Auto-update profile.json via GitHub Actions" || echo "No changes to commit"
+          git add public/profile.json
+          git commit -m "Auto-update profile.json" || echo "No changes to commit"
           git push
