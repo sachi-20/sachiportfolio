@@ -73,6 +73,8 @@ jobs:
             exit 1
           fi
 
+          cat public/profile.json | jq . > public/profile.tmp && mv public/profile.tmp public/profile.json
+
       - name: Show preview (for logs)
         run: |
           echo "Top of generated public/profile.json:"
