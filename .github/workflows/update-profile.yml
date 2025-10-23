@@ -21,52 +21,54 @@ jobs:
 
       - name: Fetch GitHub profile via GraphQL
         env:
-          GH_USERNAME: sachi-20
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+            GH_USERNAME: sachi-20
+            GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
-          mkdir -p public
+            mkdir -p public
 
-          QUERY='query($login: String!) {
-            user(login: $login) {
-              name
-              bio
-              avatarUrl
-              location
-              pinnedItems(first: 6) {
-                totalCount
-                edges {
-                  node {
+            QUERY='query($login: String!) {
+                user(login: $login) {
                     name
-                    description
-                    forkCount
-                    stargazers { totalCount }
-                    url
-                    id
-                    diskUsage
-                    primaryLanguage { name color }
-                  }
+                    bio
+                    avatarUrl
+                    location
+                    pinnedItems(first: 3) {
+                        totalCount
+                        edges {
+                            node {
+                                name
+                                description
+                                forkCount
+                                stargazers { totalCount }
+                                url
+                                id
+                                diskUsage
+                                primaryLanguage { name color }
+                            }
+                        }
+                    }
                 }
-              }
-            }
-          }'
+            }'
 
-          echo "Fetching GraphQL data for $GH_USERNAME"
-          curl -s -X POST https://api.github.com/graphql \
-            -H "Authorization: bearer $GH_TOKEN" \
-            -H "Content-Type: application/json" \
-            -d "{\"query\": \"$QUERY\", \"variables\": {\"login\": \"$GH_USERNAME\"}}" \
-            -o public/profile.json
+            # Encode query and variables into a single JSON line safely
+            JSON_PAYLOAD=$(jq -n --arg q "$QUERY" --arg login "$GH_USERNAME" '{query: $q, variables: {login: $login}}')
 
-          echo "GraphQL response (first 20 lines):"
-          head -n 20 public/profile.json
+            echo "Fetching GraphQL data for $GH_USERNAME"
+            curl -s -X POST https://api.github.com/graphql \
+                -H "Authorization: bearer $GH_TOKEN" \
+                -H "Content-Type: application/json" \
+                -d "$JSON_PAYLOAD" \
+                -o public/profile.json
 
-          # Validate output
-          if ! grep -q '"data"' public/profile.json; then
-            echo "❌ ERROR: Invalid GraphQL response (no 'data' field)"
-            cat public/profile.json
-            exit 1
-          fi
+            echo "GraphQL response (first 20 lines):"
+            head -n 20 public/profile.json
 
+            # Validate output
+            if ! grep -q '"data"' public/profile.json; then
+                echo "❌ ERROR: Invalid GraphQL response (no 'data' field)"
+                cat public/profile.json
+                exit 1
+            fi
 
       - name: Show small preview (for logs)
         run: |
@@ -81,4 +83,3 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git commit -m "Auto-update profile.json via GitHub Actions" || echo "No changes to commit"
           git push
-
