@@ -1,0 +1,37 @@
+name: Auto-update profile.json
+
+on:
+  schedule:
+    - cron: '0 */24 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write   # <-- allows pushing changes
+
+jobs:
+  update-profile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Fetch GitHub profile
+        env:
+          GH_USERNAME: sachi-20
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          echo "Fetching GitHub profile..."
+          mkdir -p public
+          curl -H "Authorization: token $GH_TOKEN" \
+               https://api.github.com/users/$GH_USERNAME \
+               -o public/profile.json
+          echo "Profile.json saved to public/"
+
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add public/profile.json
+          git commit -m "Auto-update profile.json via GitHub Actions" || echo "No changes"
+          git push
+
