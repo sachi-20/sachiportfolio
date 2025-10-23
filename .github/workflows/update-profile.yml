@@ -73,7 +73,7 @@ jobs:
             exit 1
           fi
 
-          cat public/profile.json | jq . > public/profile.tmp && mv public/profile.tmp public/profile.json
+          npx prettier --write public/profile.json
 
       - name: Show preview (for logs)
         run: |
