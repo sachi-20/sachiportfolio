@@ -88,3 +88,10 @@ jobs:
           git commit -m "Auto-update profile.json" || echo "No changes to commit"
           git push
 
+      - name: Trigger Vercel redeploy
+        if: success()
+        env:
+          DEPLOY_HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK_URL }}
+        run: |
+          echo "Triggering Vercel redeploy..."
+          curl -X POST "$DEPLOY_HOOK"
