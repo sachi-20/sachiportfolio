@@ -48,6 +48,8 @@
 .header li a:hover,
 .header .menu-btn:hover {
   background-color: $headerHoverBG;
+  /* make text light on hover so it contrasts with the dark hover background */
+  color: $textColorDark;
 }
 
 .header .logo {
