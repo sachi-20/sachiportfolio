@@ -29,7 +29,7 @@ jobs:
               bio
               avatarUrl
               location
-              pinnedItems(first: 4) {
+              pinnedItems(first: 5) {
                 totalCount
                 edges {
                   node {
